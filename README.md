@@ -8,5 +8,5 @@ Mempermudah pencatatan katalog buku, manajemen peminjaman, serta pengelolaan ang
 ## Cara Menjalankan Project Secara Lokal
 1. Clone repository:
    ```bash
-   git clone -b dev [https://github.com/](https://github.com/)[USERNAME]/app-perpustakaan.git
+   git clone -b dev [https://github.com/](https://github.com/)felisanailah/app-perpustakaan.git
    cd app-perpustakaan
