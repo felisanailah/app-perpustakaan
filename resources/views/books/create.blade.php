@@ -1,0 +1,63 @@
+@extends('layouts.app')
+
+@section('title', 'Tambah Buku')
+
+@section('content')
+    <p><a href="{{ route('books.index') }}">← Kembali ke daftar buku</a></p>
+
+    <h1>Tambah Buku Baru</h1>
+
+    <form action="{{ route('books.store') }}" method="POST">
+        @csrf
+
+        <div style="margin-bottom: 12px;">
+            <label for="judul">Judul Buku</label><br>
+            <input type="text" id="judul" name="judul" value="{{ old('judul') }}">
+            @error('judul')
+                <div style="color: red; font-size: 14px;">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div style="margin-bottom: 12px;">
+            <label for="penulis">Penulis</label><br>
+            <input type="text" id="penulis" name="penulis" value="{{ old('penulis') }}">
+            @error('penulis')
+                <div style="color: red; font-size: 14px;">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div style="margin-bottom: 12px;">
+            <label for="penerbit">Penerbit</label><br>
+            <input type="text" id="penerbit" name="penerbit" value="{{ old('penerbit') }}">
+            @error('penerbit')
+                <div style="color: red; font-size: 14px;">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div style="margin-bottom: 12px;">
+            <label for="tahun_terbit">Tahun Terbit</label><br>
+            <input type="number" id="tahun_terbit" name="tahun_terbit" value="{{ old('tahun_terbit') }}">
+            @error('tahun_terbit')
+                <div style="color: red; font-size: 14px;">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div style="margin-bottom: 12px;">
+            <label for="stok">Stok</label><br>
+            <input type="number" id="stok" name="stok" value="{{ old('stok') }}">
+            @error('stok')
+                <div style="color: red; font-size: 14px;">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div style="margin-bottom: 12px;">
+            <label for="kategori">Kategori</label><br>
+            <input type="text" id="kategori" name="kategori" value="{{ old('kategori') }}">
+            @error('kategori')
+                <div style="color: red; font-size: 14px;">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <button type="submit" class="btn">Simpan Buku</button>
+    </form>
+@endsection

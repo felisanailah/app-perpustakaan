@@ -1,38 +1,21 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
-class StoreMemberRequest extends FormRequest
+class MemberController extends Controller
 {
-    public function authorize(): bool
-    {
-        return true; // Izinkan semua request karena belum ada autentikasi
-    }
+    private array $members = [
+        ['id' => 1, 'nama' => 'Siti Aminah', 'nim' => '2310501001', 'email' => 'siti.aminah@pens.ac.id', 'nomor_telepon' => '081234567890', 'status' => 'aktif'],
+        ['id' => 2, 'nama' => 'Budi Santoso', 'nim' => '2310501002', 'email' => 'budi.santoso@pens.ac.id', 'nomor_telepon' => '081298765432', 'status' => 'aktif'],
+        ['id' => 3, 'nama' => 'Dewi Lestari', 'nim' => '2310501003', 'email' => 'dewi.lestari@pens.ac.id', 'nomor_telepon' => '081211122233', 'status' => 'nonaktif'],
+    ];
 
-    public function rules(): array
+    public function index()
     {
-        return [
-            'nama'          => 'required|string|max:100',
-            'nim'           => 'required|string|max:20',
-            'email'         => 'required|email|max:100',
-            'nomor_telepon' => 'required|string|max:15',
-            'alamat'        => 'nullable|string',
-            'status'        => 'required|in:aktif,nonaktif',
-        ];
-    }
+        $members = $this->members;
 
-    public function messages(): array
-    {
-        return [
-            'nama.required'          => 'Nama lengkap wajib diisi.',
-            'nim.required'           => 'NIM wajib diisi.',
-            'email.required'         => 'Email wajib diisi.',
-            'email.email'            => 'Format email tidak valid.',
-            'nomor_telepon.required' => 'Nomor telepon wajib diisi.',
-            'status.required'        => 'Status anggota wajib dipilih.',
-            'status.in'              => 'Pilihan status tidak valid.',
-        ];
+        return view('members.index', compact('members'));
     }
 }
