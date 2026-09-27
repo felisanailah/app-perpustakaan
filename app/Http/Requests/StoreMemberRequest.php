@@ -1,21 +1,40 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Requests;
 
-use Illuminate\Http\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
-class MemberController extends Controller
+class StoreMemberRequest extends FormRequest
 {
-    private array $members = [
-        ['id' => 1, 'nama' => 'Siti Aminah', 'nim' => '2310501001', 'email' => 'siti.aminah@pens.ac.id', 'nomor_telepon' => '081234567890', 'status' => 'aktif'],
-        ['id' => 2, 'nama' => 'Budi Santoso', 'nim' => '2310501002', 'email' => 'budi.santoso@pens.ac.id', 'nomor_telepon' => '081298765432', 'status' => 'aktif'],
-        ['id' => 3, 'nama' => 'Dewi Lestari', 'nim' => '2310501003', 'email' => 'dewi.lestari@pens.ac.id', 'nomor_telepon' => '081211122233', 'status' => 'nonaktif'],
-    ];
-
-    public function index()
+    public function authorize(): bool
     {
-        $members = $this->members;
+        return true;
+    }
 
-        return view('members.index', compact('members'));
+    public function rules(): array
+    {
+        return [
+            'nama' => 'required|string|max:100',
+            'nim' => 'required|string|max:20|unique:members,nim',
+            'email' => 'required|email|max:100|unique:members,email',
+            'nomor_telepon' => 'required|string|max:15',
+            'alamat' => 'required|string',
+            'status' => 'required|in:aktif,nonaktif',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'nama.required' => 'Nama anggota wajib diisi.',
+            'nim.required' => 'NIM wajib diisi.',
+            'nim.unique' => 'NIM sudah terdaftar.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email sudah terdaftar.',
+            'nomor_telepon.required' => 'Nomor telepon wajib diisi.',
+            'alamat.required' => 'Alamat wajib diisi.',
+            'status.required' => 'Status wajib dipilih.',
+        ];
     }
 }
