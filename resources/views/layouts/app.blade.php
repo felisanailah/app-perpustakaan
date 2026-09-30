@@ -2,52 +2,107 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Peminjaman</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', 'Sistem Perpustakaan')</title>
     <style>
-        body { font-family: sans-serif; margin: 40px; max-width: 500px; }
-        label { display: block; margin-top: 12px; font-weight: bold; }
-        input, select { width: 100%; padding: 6px; margin-top: 4px; box-sizing: border-box; }
-        .error { color: #b91c1c; font-size: 14px; margin-top: 4px; }
-        .btn { margin-top: 20px; padding: 8px 16px; background: #2563eb; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
-        .readonly { background: #f3f4f6; padding: 8px; border-radius: 4px; margin-top: 4px; }
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9fafb;
+            color: #1f2937;
+        }
+        header {
+            background-color: #2563eb;
+            color: white;
+            padding: 1rem 2rem;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        nav a {
+            color: white;
+            margin-right: 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+        }
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f3f4f6;
+        }
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+        .inline {
+            display: inline;
+        }
+        .alert-success {
+            padding: 10px 15px;
+            background-color: #d1fae5;
+            color: #065f46;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        
+        /* CSS Badge Status */
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #fff;
+            display: inline-block;
+        }
+        .badge-success { background-color: #16a34a; } /* Hijau untuk dikembalikan */
+        .badge-warning { background-color: #d97706; } /* Oranye untuk dipinjam */
+        .badge-danger  { background-color: #dc2626; } /* Merah untuk terlambat */
     </style>
 </head>
 <body>
-    <h1>Edit Peminjaman</h1>
-    <p><a href="{{ route('loans.index') }}">&larr; Kembali ke daftar peminjaman</a></p>
+    <header>
+        <h1>Sistem Perpustakaan</h1>
+        <nav>
+            <a href="{{ route('books.index') }}">Buku</a>
+            <a href="{{ route('categories.index') }}">Kategori</a>
+            <a href="{{ route('members.index') }}">Anggota</a>
+            <a href="{{ route('loans.index') }}">Peminjaman</a>
+        </nav>
+    </header>
 
-    <label>Anggota</label>
-    <div class="readonly">{{ $loan['member']['nama'] }} ({{ $loan['member']['nim'] }})</div>
+    <div class="container">
+        @if (session('success'))
+            <div class="alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
-    <label>Buku</label>
-    <div class="readonly">
-        @foreach ($loan['loanItems'] as $item)
-            {{ $item['book']['judul'] }}@if (!$loop->last), @endif
-        @endforeach
+        @yield('content')
     </div>
-
-    <form action="{{ route('loans.update', $loan['id']) }}" method="POST">
-        @csrf
-        @method('PUT')
-        <input type="hidden" name="tanggal_pinjam" value="{{ $loan['tanggal_pinjam'] }}">
-
-        <label for="tanggal_kembali">Tanggal Kembali</label>
-        <input type="date" name="tanggal_kembali" id="tanggal_kembali" value="{{ old('tanggal_kembali', $loan['tanggal_kembali']) }}">
-        @error('tanggal_kembali')
-            <div class="error">{{ $message }}</div>
-        @enderror
-
-        <label for="status">Status</label>
-        <select name="status" id="status">
-            <option value="dipinjam" @selected(old('status', $loan['status']) == 'dipinjam')>Dipinjam</option>
-            <option value="dikembalikan" @selected(old('status', $loan['status']) == 'dikembalikan')>Dikembalikan</option>
-            <option value="terlambat" @selected(old('status', $loan['status']) == 'terlambat')>Terlambat</option>
-        </select>
-        @error('status')
-            <div class="error">{{ $message }}</div>
-        @enderror
-
-        <button type="submit" class="btn">Perbarui</button>
-    </form>
 </body>
 </html>

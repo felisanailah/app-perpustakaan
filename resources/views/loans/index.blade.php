@@ -46,7 +46,7 @@
                         @if ($loan['status'] === 'dipinjam')
                             <form class="inline" action="{{ route('loans.kembalikan', $loan['id']) }}" method="POST">
                                 @csrf
-                                @method('PATCH')
+                                @method('PUT')
                                 <button type="submit" style="background: #16a34a; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;">Kembalikan</button>
                             </form>
                             |
