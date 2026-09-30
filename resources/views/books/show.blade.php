@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Detail Buku</title>
     <style>
-        body { font-family: sans-serif; margin: 40px; max-width: 500px; }
+        body { font-family: sans-serif; margin: 40px; max-width: 600px; }
         table { border-collapse: collapse; width: 100%; margin-top: 16px; }
         th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
         th { width: 160px; background: #f3f4f6; }
@@ -33,7 +33,7 @@
         </tr>
         <tr>
             <th>ISBN</th>
-            <td>{{ $book['isbn'] ?? '-' }}</td>
+            <td>{{ $book['isbn'] }}</td>
         </tr>
         <tr>
             <th>Stok</th>
@@ -41,7 +41,7 @@
         </tr>
         <tr>
             <th>Kategori</th>
-            <td>{{ $book['kategori'] }}</td>
+            <td>{{ $book['category']['nama_kategori'] }}</td>
         </tr>
     </table>
 </body>
