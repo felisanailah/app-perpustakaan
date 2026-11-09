@@ -58,7 +58,6 @@
             margin: 2rem auto;
             padding: 0 1rem;
         }
-        /* Style Tabel Persis Foto Kedua */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -86,6 +85,15 @@
             display: inline-block;
             font-weight: 500;
         }
+        .stats-grid { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
+        .stat-card { flex: 1; min-width: 160px; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; text-align: center; }
+        .stat-card .value { font-size: 32px; font-weight: bold; color: #1d72b8; }
+        .stat-card .label { margin-top: 6px; color: #6b7280; font-size: 14px; }
+        .pagination { margin-top: 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        .pagination a { color: #1d72b8; text-decoration: none; }
+        .pagination a:hover { text-decoration: underline; }
+        .pagination .pagination-current { font-weight: bold; color: #111827; }
+        .pagination .pagination-disabled { color: #9ca3af; }
     </style>
 </head>
 <body>
@@ -94,12 +102,14 @@
         <div>
             <a href="{{ url('/') }}" class="navbar-brand">Sistem Perpustakaan</a>
             <div class="nav-links">
+                <a href="{{ route('dashboard') }}">Dashboard</a>
                 <a href="{{ route('books.index') }}">Buku</a>
                 @if(auth()->check() && auth()->user()->role === 'admin')
                     <a href="{{ route('categories.index') }}">Kategori</a>
                 @endif
                 <a href="{{ route('members.index') }}">Anggota</a>
                 <a href="{{ route('loans.index') }}">Peminjaman</a>
+                <a href="{{ route('loans.report') }}">Laporan</a>
             </div>
         </div>
 
